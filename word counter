@@ -1,0 +1,33 @@
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+public class WordCounter {
+ public static void main(String[] args) {
+ Scanner scanner = new Scanner(System.in);
+ System.out.println("Enter 'text' to input text, or 'file' to input a file 
+path:");
+ String inputType = scanner.nextLine();
+ String text = "";
+ if (inputType.equals("text")) {
+ System.out.println("Enter your text:");
+ text = scanner.nextLine();
+ } else if (inputType.equals("file")) {
+ System.out.println("Enter the file path:");
+ String filePath = scanner.nextLine();
+ try {
+ File file = new File(filePath);
+ Scanner fileScanner = new Scanner(file);
+ while (fileScanner.hasNextLine()) {
+ text += fileScanner.nextLine() + "\n";
+ }
+ } catch (FileNotFoundException e) {
+ System.out.println("File not found.");
+ }
+ } else {
+ System.out.println("Invalid input type.");
+ return;
+ }
+ String[] words = text.split("[\\s\\p{Punct}]+");
+ int wordCount = words.length;
+ System.out.println("Total word count: " + wordCount);
+ }
+}
